@@ -19,16 +19,16 @@
 //==============================================================================
 
 #include <ValidatorKeys.h>
-#include <ripple/basics/base64.h>
-#include <ripple/basics/StringUtilities.h>
-#include <ripple/json/json_reader.h>
-#include <ripple/json/to_string.h>
-#include <ripple/protocol/HashPrefix.h>
-#include <ripple/protocol/Sign.h>
+#include <blocmatrix/basics/base64.h>
+#include <blocmatrix/basics/StringUtilities.h>
+#include <blocmatrix/json/json_reader.h>
+#include <blocmatrix/json/to_string.h>
+#include <blocmatrix/protocol/HashPrefix.h>
+#include <blocmatrix/protocol/Sign.h>
 #include <boost/filesystem.hpp>
 #include <fstream>
 
-namespace ripple {
+namespace blocmatrix {
 
 std::string
 ValidatorToken::toString () const
@@ -37,7 +37,7 @@ ValidatorToken::toString () const
     jv["validation_secret_key"] = strHex(secretKey);
     jv["manifest"] = manifest;
 
-    return ripple::base64_encode(to_string(jv));
+    return blocmatrix::base64_encode(to_string(jv));
 }
 
 ValidatorKeys::ValidatorKeys (KeyType const& keyType)
@@ -192,9 +192,9 @@ ValidatorKeys::createValidatorToken (
     st[sfPublicKey] = publicKey_;
     st[sfSigningPubKey] = tokenPublic;
 
-    ripple::sign(st, HashPrefix::manifest, keyType, tokenSecret);
+    blocmatrix::sign(st, HashPrefix::manifest, keyType, tokenSecret);
 
-    ripple::sign(st, HashPrefix::manifest, keyType_, secretKey_,
+    blocmatrix::sign(st, HashPrefix::manifest, keyType_, secretKey_,
         sfMasterSignature);
 
     Serializer s;
@@ -202,7 +202,7 @@ ValidatorKeys::createValidatorToken (
 
     std::string m (static_cast<char const*> (s.data()), s.size());
     return ValidatorToken {
-        ripple::base64_encode(m), tokenSecret };
+        blocmatrix::base64_encode(m), tokenSecret };
 }
 
 std::string
@@ -214,20 +214,20 @@ ValidatorKeys::revoke ()
     st[sfSequence] = std::numeric_limits<std::uint32_t>::max ();
     st[sfPublicKey] = publicKey_;
 
-    ripple::sign(st, HashPrefix::manifest, keyType_, secretKey_,
+    blocmatrix::sign(st, HashPrefix::manifest, keyType_, secretKey_,
         sfMasterSignature);
 
     Serializer s;
     st.add(s);
 
     std::string m (static_cast<char const*> (s.data()), s.size());
-    return ripple::base64_encode(m);
+    return blocmatrix::base64_encode(m);
 }
 
 std::string
 ValidatorKeys::sign (std::string const& data)
 {
-    return strHex(ripple::sign (publicKey_, secretKey_, makeSlice (data)));
+    return strHex(blocmatrix::sign (publicKey_, secretKey_, makeSlice (data)));
 }
 
-} // ripple
+} // blocmatrix

@@ -19,12 +19,12 @@
 
 #include <ValidatorKeys.h>
 #include <test/KeyFileGuard.h>
-#include <ripple/basics/base64.h>
-#include <ripple/basics/StringUtilities.h>
-#include <ripple/protocol/HashPrefix.h>
-#include <ripple/protocol/Sign.h>
+#include <blocmatrix/basics/base64.h>
+#include <blocmatrix/basics/StringUtilities.h>
+#include <blocmatrix/protocol/HashPrefix.h>
+#include <blocmatrix/protocol/Sign.h>
 
-namespace ripple {
+namespace blocmatrix {
 
 namespace tests {
 
@@ -194,7 +194,7 @@ private:
                     derivePublicKey(tokenKeyType, token->secretKey);
 
                 STObject st (sfGeneric);
-                auto const manifest = ripple::base64_decode(token->manifest);
+                auto const manifest = blocmatrix::base64_decode(token->manifest);
                 SerialIter sit (manifest.data (), manifest.size ());
                 st.set (sit);
 
@@ -242,7 +242,7 @@ private:
             auto const revocation = keys.revoke ();
 
             STObject st (sfGeneric);
-            auto const manifest = ripple::base64_decode(revocation);
+            auto const manifest = blocmatrix::base64_decode(revocation);
             SerialIter sit (manifest.data (), manifest.size ());
             st.set (sit);
 
@@ -393,8 +393,8 @@ public:
     }
 };
 
-BEAST_DEFINE_TESTSUITE(ValidatorKeys, keys, ripple);
+BEAST_DEFINE_TESTSUITE(ValidatorKeys, keys, blocmatrix);
 
 } // tests
 
-} // ripple
+} // blocmatrix

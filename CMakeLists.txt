@@ -11,8 +11,8 @@ project (validator-keys-tool)
 get_directory_property(has_parent PARENT_DIRECTORY)
 if (NOT has_parent)
   project (validator-keys-tool)
-  find_package(Ripple QUIET)
-  if (NOT TARGET Ripple::xrpl_core)
+  find_package(Blocmatrix QUIET)
+  if (NOT TARGET Blocmatrix::bmcl_core)
     find_package(Git)
 
     if (NOT GIT_FOUND)
@@ -29,31 +29,31 @@ if (NOT has_parent)
       message (WARNING "git command failed - deduced branch might be incorrect")
     endif ()
 
-    # rippled_tag is cache string and can be overriden when configuring
-    # with -Drippled_tag=commit_or_tag in order to pick a specific
-    # rippled version to download. Default tag is develop/master/release as 
+    # blocmatrixd_tag is cache string and can be overriden when configuring
+    # with -Dblocmatrixd_tag=commit_or_tag in order to pick a specific
+    # blocmatrixd version to download. Default tag is develop/master/release as 
     # determined by the branch of this project
     if (NOT (_branch STREQUAL "master" OR _branch STREQUAL "release"))
-      set (rippled_tag "develop" CACHE STRING
-        "tag/commit of rippled to fetch from if a local install is not found")
+      set (blocmatrixd_tag "develop" CACHE STRING
+        "tag/commit of blocmatrixd to fetch from if a local install is not found")
     else ()
-      set (rippled_tag "${_branch}" CACHE STRING
-        "tag/commit of rippled to fetch from if a local install is not found")
+      set (blocmatrixd_tag "${_branch}" CACHE STRING
+        "tag/commit of blocmatrixd to fetch from if a local install is not found")
     endif ()
-    message(STATUS "Installed rippled not found... \
-      using local copy from tag/commit [${rippled_tag}]")
+    message(STATUS "Installed blocmatrixd not found... \
+      using local copy from tag/commit [${blocmatrixd_tag}]")
     include (FetchContent)
     FetchContent_Declare(
-      rippled_src
-      GIT_REPOSITORY https://github.com/ReddyArunreddy/rippled.git
-      GIT_TAG ${rippled_tag}
+      blocmatrixd_src
+      GIT_REPOSITORY https://github.com/ReddyArunreddy/blocmatrixd.git
+      GIT_TAG ${blocmatrixd_tag}
     )
-    FetchContent_GetProperties(rippled_src)
-    if(NOT rippled_src_POPULATED)
-      message (STATUS "Pausing to download rippled source...")
-      FetchContent_Populate(rippled_src)
+    FetchContent_GetProperties(blocmatrixd_src)
+    if(NOT blocmatrixd_src_POPULATED)
+      message (STATUS "Pausing to download blocmatrixd source...")
+      FetchContent_Populate(blocmatrixd_src)
     endif()
-    add_subdirectory(${rippled_src_SOURCE_DIR} xrpl_core)
+    add_subdirectory(${blocmatrixd_src_SOURCE_DIR} xrpl_core)
   endif ()
 endif ()
 
@@ -64,7 +64,7 @@ add_executable (validator-keys
   src/test/ValidatorKeys_test.cpp
   src/test/ValidatorKeysTool_test.cpp)
 target_include_directories (validator-keys PRIVATE src)
-target_link_libraries (validator-keys Ripple::xrpl_core)
+target_link_libraries (validator-keys Blocmatrix::bmcl_core)
 
 if (has_parent)
   set_target_properties (validator-keys PROPERTIES EXCLUDE_FROM_ALL ON)

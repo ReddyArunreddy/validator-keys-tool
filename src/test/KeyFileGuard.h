@@ -17,11 +17,11 @@
 */
 //==============================================================================
 
-#include <ripple/beast/unit_test.h>
+#include <blocmatrix/beast/unit_test.h>
 #include <boost/filesystem.hpp>
 #include <fstream>
 
-namespace ripple {
+namespace blocmatrix {
 
 /**
    Write a key file dir and remove when done.
@@ -74,4 +74,4 @@ public:
     }
 };
 
-}  // ripple
+}  // blocmatrix

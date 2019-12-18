@@ -20,9 +20,9 @@
 #include <ValidatorKeysTool.h>
 #include <ValidatorKeys.h>
 #include <test/KeyFileGuard.h>
-#include <ripple/protocol/SecretKey.h>
+#include <blocmatrix/protocol/SecretKey.h>
 
-namespace ripple {
+namespace blocmatrix {
 
 namespace tests {
 
@@ -309,8 +309,8 @@ public:
     }
 };
 
-BEAST_DEFINE_TESTSUITE(ValidatorKeysTool, keys, ripple);
+BEAST_DEFINE_TESTSUITE(ValidatorKeysTool, keys, blocmatrix);
 
 } // tests
 
-} // ripple
+} // blocmatrix

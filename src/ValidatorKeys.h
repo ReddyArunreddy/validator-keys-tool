@@ -18,8 +18,8 @@
 */
 //==============================================================================
 
-#include <ripple/crypto/KeyType.h>
-#include <ripple/protocol/SecretKey.h>
+#include <blocmatrix/crypto/KeyType.h>
+#include <blocmatrix/protocol/SecretKey.h>
 
 namespace boost
 {
@@ -29,7 +29,7 @@ class path;
 }
 }
 
-namespace ripple {
+namespace blocmatrix {
 
 struct ValidatorToken
 {
@@ -132,4 +132,4 @@ public:
     }
 };
 
-} // ripple
+} // blocmatrix
